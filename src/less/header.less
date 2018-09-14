@@ -1,0 +1,49 @@
+@colorwithe:#fff;
+@colorblue: #00a8ff;
+
+.navbar-default{
+    margin-bottom: 10px!important; 
+}
+.navbar{
+    margin-bottom: 0px; 
+    border-radius: 0;
+}
+// 顶部左边样式
+.navbar-inverse{
+    .navbar-brand{
+        color: @colorwithe;
+        font-size: 24px;
+        font-style: italic;
+                span{
+                    font-size: 16px;
+                    margin-right: 5px;
+                }
+    }
+// 顶部右边样式    
+    .navbar-nav{
+        &>li{
+            &>a{
+                color: #fff;
+                &:hover{
+                    color:@colorblue;
+                    text-decoration: underline;
+            
+                }
+            }
+        }
+    }
+} 
+//工具提示的图片大小
+.tooltip img{
+    width: 100px;
+}
+// 第二个导航样式
+.navbar-default .navbar-nav>li>a{
+    line-height: 40px;
+    font-size: 18px;
+    text-align: center;
+    &:hover{
+        color:@colorblue;
+        background: #f3eeef;
+    }
+}

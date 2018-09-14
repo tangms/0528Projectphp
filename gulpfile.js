@@ -1,55 +1,64 @@
+//引入gulp
+var gulp=require("gulp");
 
-var gulp=require('gulp');
-var path=require('path')
-var less=require('gulp-less')
-var sass=require('gulp-sass');
-// 引入js压缩文件
-var jufi=require('gulp-uglify');
-var cleanCss=require('gulp-clean-css');
-var rename=require('gulp-rename')
+//引入系统模块path路径
+var path=require("path");
+
+//引入插件模块
+var less=require("gulp-less");
+var sass=require("gulp-sass");
+var uglify=require("gulp-uglify");
+var rename=require("gulp-rename");
+var cleanCss=require("gulp-clean-css");
 
 //引入热刷新模块
 var livereload=require("gulp-livereload");
 
-// sass压缩文件流程
-gulp.task('sastak',()=>{
-    gulp.src('./sass/*.scss')
-        .pipe(sass().on('error', sass.logError)) //调用sass方法编译
-        .pipe(cleanCss())
-        .pipe(rename(function(path){
-            path.basename+='.min';
-        }))
-    .pipe(gulp.dest('./dist/css/minCss'))
-    .pipe(livereload()); //开启热刷新
-    
-})
-
-// less压缩文件
-gulp.task('lestak',()=>{
-    gulp.src('./less/*.less')
+//配置less任务
+gulp.task("lessTask",function () {
+    gulp.src('./src/less/*.less') //源文件
     .pipe(less({
-        paths: [ path.join(__dirname, 'less', 'includes') ]
+        paths: [ path.join(__dirname, 'less', 'includes') ] //调用插件的方法
     }))
-    .pipe(cleanCss())
-    .pipe(rename(function(path){
-        path.basename+='.min';
-    }))
-    .pipe(gulp.dest('./dist/css/mincss'))
+    .pipe(cleanCss()) //2调用压缩插件的方法
+    .pipe(rename(function (path) {
+        path.basename += ".min"; //文件名： 原来的文件名+新增的文件
+    })) //重命名
+    .pipe(gulp.dest('./dist/css/minCss')) //输出路径
     .pipe(livereload()); //开启热刷新
-})
-// js压缩文件
-gulp.task('sajs',()=>{
-    gulp.src('./js/*.js')
-    .pipe(jufi())
-    .pipe(rename(function(path){
-        path.basename+='.min';
-    }))
-    .pipe(gulp.dest('./dist/js/min'))
+});
+
+//配置sass任务
+gulp.task("sassTask",function () {
+    gulp.src('./src/scss/*.scss') //源文件
+    .pipe(sass().on('error', sass.logError)) //1调用sass方法编译
+    .pipe(cleanCss()) //2调用压缩插件的方法
+    .pipe(rename(function (path) {
+        path.basename += ".min"; //文件名： 原来的文件名+新增的文件
+    })) //重命名
+    .pipe(gulp.dest('./dist/css/minCss')) //输出路径
     .pipe(livereload()); //开启热刷新
-})
-// 统一观察
-gulp.task('default',()=>{
-    gulp.watch('./sass/*.scss',["sastak"]);
-    gulp.watch('./less/*.less',["lestak"]);
-    gulp.watch('./js/*.js',["sajs"]);
-})
+});
+
+//配置js压缩任务
+gulp.task("uglifyJS",function () {
+    gulp.src('./src/js/*.js') //源文件
+        .pipe(uglify()) //插件方法调用
+        .pipe(rename(function (path) {
+            path.basename += ".min"; //文件名： 原来的文件名+新增的文件
+          })) //重命名
+        .pipe(gulp.dest('./dist/js')) //输出目标
+        .pipe(livereload()); //开启热刷新
+});
+
+//配置default默认任务
+gulp.task("default",function () {
+    //开启监听服务器
+    livereload.listen();
+    
+    //语法：gulp.watch('观察的目标', ['执行的任务名称']);
+    //监听less，sass，js并调用对应的任务
+    gulp.watch("./src/less/*.less",["lessTask"]);
+    gulp.watch("./src/scss/*.scss",["sassTask"]);
+    gulp.watch("./src/js/*.js",["uglifyJS"]);
+});

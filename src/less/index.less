@@ -1,0 +1,95 @@
+
+@import url('./header.less');
+// 列表
+.filer{
+   .row {
+        .col-md-4{
+            background: url('../../../images/feature01.png') no-repeat left;
+            height: 65px;
+            padding-left: 80px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            h3{
+                font-weight: 700;
+                font-size: 18px;
+                margin: 0;
+                padding: 0;
+            }
+        }
+        .col-md-4:nth-child(2){
+            background: url('../../../images/feature02.png') no-repeat left;
+        }
+        .col-md-4:nth-child(3){
+            background: url('../../../images/feature03.png') no-repeat left;
+        }
+
+
+   }
+  
+}
+// 咨询列表
+.panel-default{
+    box-shadow: none;
+    border: none;
+    &>.panel-heading{
+        background-color:#fff;
+        border: none;
+        border-bottom: solid 1px #ccc;
+        margin-top:20px;
+        padding: 0;
+        h2{
+            margin:0;
+            padding: 0;
+            font-size: 24px;
+            color: #2e8ece;
+            border-bottom: solid 3px #2e8ece;
+        }
+    }
+    table{
+        margin-top: 20px;
+
+        &>thead{
+              &>tr{
+                 
+                  &>th{
+                        border: none;
+                  }
+              }
+        }   
+    }
+    ul{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        margin-top: 10px;
+        li{
+            margin: 0;
+            padding: 0;
+            line-height: 38px;
+            border-bottom: dashed 1px #ccc;
+                p{
+                margin: 0;
+                .shea{
+                    color: #333333;
+                    text-decoration: none;
+                    &:hover{
+                        color: #00a8ff; 
+                    }
+                }      
+    }
+}
+    }
+}
+
+
+// 最小化
+@media all and(max-width:500px){
+    table{
+        tr{  
+             .give{
+                    display: none;
+             }
+        }
+    }
+}
+@import url('./footer.less');
